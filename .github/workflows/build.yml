@@ -1,0 +1,39 @@
+name: Build WorldClock
+
+on:
+  push:
+    tags:
+      - 'v*'   # 推送标签（如 v1.0.0）时触发
+  workflow_dispatch:  # 也支持手动触发
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: |
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            npm run build:win
+          else
+            npm run build:mac
+          fi
+        shell: bash
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WorldClock-${{ matrix.os }}
+          path: dist/*

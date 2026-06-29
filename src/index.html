@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+  <title>WorldClock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 标题栏（拖拽区域） -->
+  <div class="title-bar" id="titleBar">
+    <div class="title-bar-drag">
+      <span class="app-logo">🕐</span>
+      <span class="app-title">World Clock</span>
+    </div>
+    <div class="title-bar-actions">
+      <button class="title-btn" id="btnTheme" title="切换主题">
+        <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="title-btn" id="btnAlwaysOnTop" title="窗口置顶">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/>
+        </svg>
+      </button>
+      <button class="title-btn" id="btnMinimize" title="最小化">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+      <button class="title-btn title-btn-close" id="btnClose" title="关闭">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 时钟卡片容器 -->
+  <div class="clock-container" id="clockContainer">
+    <!-- 由 JavaScript 动态渲染 -->
+  </div>
+
+  <!-- 底部会议助手 -->
+  <div class="meeting-section">
+    <div class="meeting-toggle" id="meetingToggle">
+      <span>📅 会议助手</span>
+      <span class="meeting-arrow">▼</span>
+    </div>
+    <div class="meeting-panel" id="meetingPanel">
+      <div class="meeting-header">
+        <span>各时区工作时间重叠区间</span>
+        <div class="meeting-header-right">
+          <button class="title-btn title-btn-icon" id="btnWorkHours" title="自定义工作时间">⚙</button>
+          <span class="font-size-controls" id="fontSizeControls">
+            <button class="font-size-btn" data-size="small" title="小字体">A</button>
+            <button class="font-size-btn active" data-size="medium" title="中字体">A</button>
+            <button class="font-size-btn" data-size="large" title="大字体">A</button>
+          </span>
+          <button class="copy-btn" id="copyMeetingTime">复制当前时间</button>
+        </div>
+      </div>
+      <div class="meeting-content" id="meetingContent">
+        <!-- 由 JS 动态渲染 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 时区选择弹窗 -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <span>选择时区</span>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-search">
+        <input type="text" id="modalSearch" placeholder="搜索城市或时区..." />
+      </div>
+      <div class="modal-list" id="modalList">
+        <!-- 由 JS 动态渲染 -->
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn" id="modalCancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 工作时间设置弹窗 -->
+  <div class="modal-overlay" id="workHoursOverlay" style="display:none;">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <span>自定义工作时间</span>
+        <button class="modal-close" id="workHoursClose">&times;</button>
+      </div>
+      <div class="work-hours-body" id="workHoursBody">
+        <!-- 由 JS 动态渲染 -->
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn" id="workHoursCancel">取消</button>
+        <button class="modal-btn modal-btn-primary" id="workHoursSave">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/timezone.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

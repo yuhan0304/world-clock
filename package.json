@@ -1,0 +1,49 @@
+{
+  "name": "world-clock",
+  "version": "1.0.0",
+  "description": "跨平台桌面时钟 - 商务极简风格，支持多时区显示与跨国会议时间规划",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac"
+  },
+  "build": {
+    "appId": "com.worldclock.app",
+    "productName": "WorldClock",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/icons/icon.png",
+      "artifactName": "WorldClock-Setup-${version}.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/icons/icon.png",
+      "artifactName": "WorldClock-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "WorldClock"
+    },
+    "dmg": {
+      "title": "WorldClock ${version}",
+      "icon": "src/assets/icons/icon.png"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
