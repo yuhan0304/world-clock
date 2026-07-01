@@ -1,49 +1,93 @@
 {
-  "name": "world-clock",
-  "version": "1.0.0",
-  "description": "跨平台桌面时钟 - 商务极简风格，支持多时区显示与跨国会议时间规划",
-  "main": "main.js",
+  "name": "world-clock-desktop",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "description": "A focused desktop world clock for international meetings.",
+  "author": "World Clock Desk",
   "scripts": {
-    "start": "electron .",
-    "build:win": "electron-builder --win",
-    "build:mac": "electron-builder --mac"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "desktop:preview": "npm run build && electron .",
+    "test:timezone": "node scripts/timezone-smoke.mjs",
+    "pack:win": "npm run build && electron-builder --win nsis --x64 -c.electronDist=node_modules/electron/dist",
+    "pack:mac": "npm run build && electron-builder --mac dmg zip --universal",
+    "tauri:dev": "tauri dev",
+    "tauri:build:win": "tauri build --bundles nsis",
+    "tauri:build:mac": "tauri build --bundles dmg,app"
+  },
+  "dependencies": {
+    "@tabler/icons-react": "^3.44.0",
+    "@tauri-apps/api": "^2.11.1",
+    "@vitejs/plugin-react": "5.0.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "vite": "6.4.2"
   },
   "build": {
-    "appId": "com.worldclock.app",
-    "productName": "WorldClock",
+    "appId": "com.worldclockdesk.app",
+    "productName": "World Clock Desk",
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": [
+      "en-US",
+      "zh-CN"
+    ],
     "directories": {
-      "output": "dist"
+      "output": "packages"
     },
     "files": [
-      "main.js",
-      "preload.js",
-      "src/**/*"
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "build/icon.ico",
+        "to": "world-clock-desk-icon.ico"
+      }
     ],
     "win": {
-      "target": "nsis",
-      "icon": "src/assets/icons/icon.png",
-      "artifactName": "WorldClock-Setup-${version}.${ext}"
-    },
-    "mac": {
-      "target": "dmg",
-      "icon": "src/assets/icons/icon.png",
-      "artifactName": "WorldClock-${version}.${ext}"
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "World-Clock-Desk-Setup-${version}-${arch}.${ext}"
     },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "WorldClock"
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.productivity",
+      "artifactName": "World-Clock-Desk-${version}-${arch}.${ext}"
     },
     "dmg": {
-      "title": "WorldClock ${version}",
-      "icon": "src/assets/icons/icon.png"
+      "title": "World Clock Desk ${version}"
     }
   },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "electron@42.5.0": true
+  },
   "devDependencies": {
-    "electron": "^33.0.0",
-    "electron-builder": "^25.0.0"
+    "@tauri-apps/cli": "^2.11.4",
+    "electron": "^42.5.0",
+    "electron-builder": "^26.15.3",
+    "ws": "^8.21.0"
   }
 }

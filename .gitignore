@@ -1,5 +1,15 @@
 node_modules/
+.npm-cache/
 dist/
-.DS_Store
+packages/
+release/
+artifacts/
+src-tauri/target/
+lite-packages/
 *.log
-package-lock.json
+build/AppIcon-*.png
+build/Square*Logo.png
+build/StoreLogo.png
+build/mipmap-*/
+build/android/
+build/ios/

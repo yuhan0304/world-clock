@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#eef3fa" />
+    <meta name="description" content="A focused world clock for international meetings." />
+    <title>World Clock Desk</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      window.addEventListener("error", function (event) {
+        var root = document.getElementById("root");
+        if (root) root.innerHTML = '<pre style="padding:16px;white-space:pre-wrap;color:#a51d2d;font:12px/1.5 Segoe UI,sans-serif">Startup error\n' + String(event.message || "Unknown error") + '</pre>';
+      });
+      window.addEventListener("unhandledrejection", function (event) {
+        var root = document.getElementById("root");
+        if (root) root.innerHTML = '<pre style="padding:16px;white-space:pre-wrap;color:#a51d2d;font:12px/1.5 Segoe UI,sans-serif">Startup error\n' + String(event.reason && (event.reason.stack || event.reason.message) || event.reason || "Unknown promise rejection") + '</pre>';
+      });
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
